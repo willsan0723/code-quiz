@@ -2,13 +2,13 @@ var timerEl = document.getElementById('timer');
 var mainEl = document.getElementById('main');
 var startBtn = document.getElementById('start');
 var timeInterval;
-var displayQuestion = ('q-container');
-var displayAnswers = ('answersList');
-var rightWrong = ('answer-boolean');
+var displayQuestion = document.getElementById('q-container');
+var displayAnswers = document.getElementById('answersList');
+var rightWrong = document.getElementById('answer-boolean');
 
 function countdown() {
     var timeLeft = 75;
-    askQuestions();
+    askQuestions(questions, displayQuestion);
     timerEl.textContent = ("Time: " + timeLeft);
     // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
     clearInterval(timeInterval);
@@ -95,14 +95,28 @@ var questions = [
             d: '4. parenthesis'
         },
         correctAnswer: 'c'
-    },
+    }
 ];
 
 var score = 0;
-function askQuestions() {
-    console.log ("I called quiz");
-    // for (var i = 0; i < questions.length; i++) {
-    //     var answer = prompt(questions[i].q);
+function askQuestions(questions, displayQuestion) {
+    var output = [];
+    var answers;    
+    for (var i = 0; i < questions.length; i++) {
+        answers = [];
+        for(letter in questions[i].answers){
+        
+        answers.push(
+            '<button name="question'+i+'" value="'+letter+'">'
+            + questions[i].answers[letter]
+        );
+        }
+        output.push(
+        '<div class="question">' + questions[i].q + '</div>'
+        + '<div class="answers">' + answers.join('') + '</div>'
+        );
+        displayQuestion.innerHTML = output.join('');
+    }
     //     if ((answers === correctAnswer)
     //     ) {
     //         alert("correct")
@@ -117,15 +131,31 @@ function askQuestions() {
     // final score
     // enter initials: text field and submit button
     // store score in localStorage
+    localStorage.setItem("score", JSON.stringify(score));
+    // localStorage.setItem("initials", JSON.stringify(initials));
+
     // display High scores
-    highScore();
-    // button to go back (returning to original page code)
-    // button to clear high scores (clearing local storage)
+    highScore();    
 }
 
 function highScore() {
     //display in quiz section instead
-    alert("Your Score is: " + score);
+    var savedScore = localStorage.getItem("score");
+    if (!savedScore) {
+        return false;
+    };
+    savedScore = JSON.parse(savedScore);
+    for (var i = 0; i < savedScore.length; i++) {
+        //display highscore
+    }
+    // button to go back (returning to original page code)
+    // button to clear high scores (clearing local storage)
+}
+function rightWrong() {
+
 }
 
-startBtn.addEventListener("click", countdown);
+startBtn.addEventListener("click", function() {
+countdown();
+}
+);
