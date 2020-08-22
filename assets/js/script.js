@@ -2,6 +2,9 @@ var timerEl = document.getElementById('timer');
 var mainEl = document.getElementById('main');
 var startBtn = document.getElementById('start');
 var timeInterval;
+var displayQuestion = ('q-container');
+var displayAnswers = ('answersList');
+var rightWrong = ('answer-boolean');
 
 function countdown() {
     var timeLeft = 75;
@@ -26,70 +29,70 @@ var questions = [
     {
         q: "Common data types do not include:",
         answers: {
-            a: 'Boolean',
-            b: 'String',
-            c: 'Alert',
-            d: 'Number'
+            a: '1. Booleans',
+            b: '2. Strings',
+            c: '3. Alerts',
+            d: '4. Numbers'
         },
         correctAnswer: 'c'
     },
     {
         q: "Which is not a looping structure in JavaScript?",
         answers: {
-            a: 'For',
-            b: 'While',
-            c: 'do-while',
-            d: 'If'
+            a: '1. For',
+            b: '2. While',
+            c: '3. do-while',
+            d: '4. If'
         },
         correctAnswer: 'd'
     },
     {
         q: "Which is not a type of Pop up box available in JavaScript?",
         answers: {
-            a: 'Alert',
-            b: 'Display',
-            c: 'Prompt',
-            d: 'Confirm'
+            a: '1. Alert',
+            b: '2. Display',
+            c: '3. Prompt',
+            d: '4. Confirm'
         },
         correctAnswer: 'b'
     },
     {
         q: "What is the disadvantage of using innerHTML in JavaScript?",
         answers: {
-            a: 'Content is replaced everywhere',
-            b: 'The entire innerHTML content is re-parsed and build into elements, therefore its much slower',
-            c: 'The innerHTML does not provide validation and therefore we can potentially insert valid and broken HTML in the document and break it',
-            d: 'All of the above'
+            a: '1. Content is replaced everywhere',
+            b: '2. The entire innerHTML content is re-parsed and build into elements, therefore its much slower',
+            c: '3. The innerHTML does not provide validation and therefore we can potentially insert valid and broken HTML in the document and break it',
+            d: '4. All of the above'
         },
         correctAnswer: 'd'
     },
     {
-        q: "Common data types do not include:",
+        q: "The condition in an if/else statement is enclosed with ______.",
         answers: {
-            a: 'Boolean',
-            b: 'String',
-            c: 'Alert',
-            d: 'Number'
+            a: '1. quotes',
+            b: '2. curly brackets',
+            c: '3. parenthesis',
+            d: '4. square brackets'
         },
         correctAnswer: 'c'
     },
     {
-        q: "Common data types do not include:",
+        q: "Arrays in JavaScript can be used to store _______.",
         answers: {
-            a: 'Boolean',
-            b: 'String',
-            c: 'Alert',
-            d: 'Number'
+            a: '1. numbers and strings',
+            b: '2. other arrays',
+            c: '3. booleans',
+            d: '4. all of the above'
         },
-        correctAnswer: 'c'
+        correctAnswer: 'd'
     },
     {
-        q: "Common data types do not include:",
+        q: "String values must be enclosed within _____ when being assigned to variables.",
         answers: {
-            a: 'Boolean',
-            b: 'String',
-            c: 'Alert',
-            d: 'Number'
+            a: '1. commas',
+            b: '2. curly brackets',
+            c: '3. quotes',
+            d: '4. parenthesis'
         },
         correctAnswer: 'c'
     },
@@ -109,8 +112,18 @@ function askQuestions() {
     //         timeLeft -= 10;
     //     } 
     // }
+    
+    // display All done!
+    // final score
+    // enter initials: text field and submit button
+    // store score in localStorage
+    // display High scores
+    highScore();
+    // button to go back (returning to original page code)
+    // button to clear high scores (clearing local storage)
 }
-function viewScore() {
+
+function highScore() {
     //display in quiz section instead
     alert("Your Score is: " + score);
 }
