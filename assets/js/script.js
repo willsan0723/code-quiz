@@ -5,6 +5,8 @@ var timeInterval;
 var displayQuestion = document.getElementById('q-container');
 var displayAnswers = document.getElementById('answersList');
 var rightWrong = document.getElementById('answer-boolean');
+var score;
+var sectionEl = document.getElementById('sectionEl');
 
 function countdown() {
     var timeLeft = 75;
@@ -15,11 +17,12 @@ function countdown() {
     timeInterval = setInterval(function () {
         if (timeLeft > 1) {
             timerEl.textContent = ("Time: " + --timeLeft);
+            score =timeLeft;
+            return score;
         }
         else {
             timerEl.textContent = '';
-            clearInterval(timeInterval);
-            localStorage.setItem("score", timeLeft);
+            clearInterval(timeInterval);            
         }
     }, 1000);
 }
@@ -34,7 +37,7 @@ var questions = [
             '3. Alerts',
             '4. Numbers'
         ],
-        correctAnswer: 'c'
+        correctAnswer: '3. Alerts'
     },
     {
         q: "Which is not a looping structure in JavaScript?",
@@ -44,7 +47,7 @@ var questions = [
             '3. do-while',
             '4. If'
         ],
-        correctAnswer: 'd'
+        correctAnswer: '4. If'
     },
     {
         q: "Which is not a type of Pop up box available in JavaScript?",
@@ -54,7 +57,7 @@ var questions = [
             '3. Prompt',
             '4. Confirm'
         ],
-        correctAnswer: 'b'
+        correctAnswer: '2. Display'
     },
     {
         q: "What is the disadvantage of using innerHTML in JavaScript?",
@@ -64,7 +67,7 @@ var questions = [
             '3. The innerHTML does not provide validation and therefore we can potentially insert valid and broken HTML in the document and break it',
             '4. All of the above'
         ],
-        correctAnswer: 'd'
+        correctAnswer: '4. All of the above'
     },
     {
         q: "The condition in an if/else statement is enclosed with ______.",
@@ -74,7 +77,7 @@ var questions = [
             '3. parenthesis',
             '4. square brackets'
         ],
-        correctAnswer: 'c'
+        correctAnswer: '3. parenthesis'
     },
     {
         q: "Arrays in JavaScript can be used to store _______.",
@@ -84,7 +87,7 @@ var questions = [
             '3. booleans',
             '4. all of the above'
         ],
-        correctAnswer: 'd'
+        correctAnswer: '4. all of the above'
     },
     {
         q: "String values must be enclosed within _____ when being assigned to variables.",
@@ -94,7 +97,7 @@ var questions = [
             '3. quotes',
             '4. parenthesis'
         ],
-        correctAnswer: 'c'
+        correctAnswer: '3. quotes'
     }
 ];
 
@@ -107,17 +110,20 @@ function askQuestions() {
         answers = [];
         answers.push
         (
-            "<button>" + questions[count].answers[i] + "</button>"
+            "<button onclick='checkAnswer()'>"  + questions[count].answers[i] + "</button>"
         );
         output.push(
-        "<div class='answers'>" + answers.join('') + "</div>"
+        "<div>" + answers.join('') + "</div>"
         );
+        //make buttons
         displayAnswers.innerHTML = output.join('');
-        //make a button
+        
         //assign function to button that increments count on click
-        //that function will check if you're end of questions array as well as check for correct answer
+        //that function will check if you're end of questions array as well as check for correct answer            
     }
     
+    
+
     //     if ((answers === correctAnswer)
     //     ) {
     //         alert("correct")
@@ -136,8 +142,25 @@ function askQuestions() {
     // localStorage.setItem("initials", JSON.stringify(initials));
 
     // display High scores
-    highScore();    
+    // highScore();    
 }
+function checkAnswer(){
+    ++count;
+    if (count<questions.length){   
+    // check answer
+    //display right or wrong    
+    askQuestions();
+    }
+    else {
+    console.log(score);
+    localStorage.setItem("score", JSON.stringify(score));
+    clearInterval(timeInterval);    
+    sectionEl.textContent = "All done!";
+    displayQuestion.innerHTML = "Your final score is: " + score + "</br>Please enter initials: ";
+    displayAnswers.textContent = "";
+    }
+}
+// </p></br><p>Your score is: " + timeLeft +"</p>
 
 function highScore() {
     //display in quiz section instead
