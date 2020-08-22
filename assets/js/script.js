@@ -28,95 +28,96 @@ function countdown() {
 var questions = [
     {
         q: "Common data types do not include:",
-        answers: {
-            a: '1. Booleans',
-            b: '2. Strings',
-            c: '3. Alerts',
-            d: '4. Numbers'
-        },
+        answers: [
+            '1. Booleans',
+            '2. Strings',
+            '3. Alerts',
+            '4. Numbers'
+        ],
         correctAnswer: 'c'
     },
     {
         q: "Which is not a looping structure in JavaScript?",
-        answers: {
-            a: '1. For',
-            b: '2. While',
-            c: '3. do-while',
-            d: '4. If'
-        },
+        answers: [
+            '1. For',
+            '2. While',
+            '3. do-while',
+            '4. If'
+        ],
         correctAnswer: 'd'
     },
     {
         q: "Which is not a type of Pop up box available in JavaScript?",
-        answers: {
-            a: '1. Alert',
-            b: '2. Display',
-            c: '3. Prompt',
-            d: '4. Confirm'
-        },
+        answers: [
+            '1. Alert',
+            '2. Display',
+            '3. Prompt',
+            '4. Confirm'
+        ],
         correctAnswer: 'b'
     },
     {
         q: "What is the disadvantage of using innerHTML in JavaScript?",
-        answers: {
-            a: '1. Content is replaced everywhere',
-            b: '2. The entire innerHTML content is re-parsed and build into elements, therefore its much slower',
-            c: '3. The innerHTML does not provide validation and therefore we can potentially insert valid and broken HTML in the document and break it',
-            d: '4. All of the above'
-        },
+        answers: [
+            '1. Content is replaced everywhere',
+            '2. The entire innerHTML content is re-parsed and build into elements, therefore its much slower',
+            '3. The innerHTML does not provide validation and therefore we can potentially insert valid and broken HTML in the document and break it',
+            '4. All of the above'
+        ],
         correctAnswer: 'd'
     },
     {
         q: "The condition in an if/else statement is enclosed with ______.",
-        answers: {
-            a: '1. quotes',
-            b: '2. curly brackets',
-            c: '3. parenthesis',
-            d: '4. square brackets'
-        },
+        answers: [
+            '1. quotes',
+            '2. curly brackets',
+            '3. parenthesis',
+            '4. square brackets'
+        ],
         correctAnswer: 'c'
     },
     {
         q: "Arrays in JavaScript can be used to store _______.",
-        answers: {
-            a: '1. numbers and strings',
-            b: '2. other arrays',
-            c: '3. booleans',
-            d: '4. all of the above'
-        },
+        answers: [
+            '1. numbers and strings',
+            '2. other arrays',
+            '3. booleans',
+            '4. all of the above'
+        ],
         correctAnswer: 'd'
     },
     {
         q: "String values must be enclosed within _____ when being assigned to variables.",
-        answers: {
-            a: '1. commas',
-            b: '2. curly brackets',
-            c: '3. quotes',
-            d: '4. parenthesis'
-        },
+        answers: [
+            '1. commas',
+            '2. curly brackets',
+            '3. quotes',
+            '4. parenthesis'
+        ],
         correctAnswer: 'c'
     }
 ];
 
-var score = 0;
-function askQuestions(questions, displayQuestion) {
+var count = 0;
+function askQuestions() {
     var output = [];
-    var answers;    
-    for (var i = 0; i < questions.length; i++) {
+    var answers;
+    displayQuestion.textContent = questions[count].q;
+    for (i = 0; i < questions[count].answers.length; i++) {
         answers = [];
-        for(letter in questions[i].answers){
-        
-        answers.push(
-            '<button name="question'+i+'" value="'+letter+'">'
-            + questions[i].answers[letter]
+        answers.push
+        (
+            "<button>" + questions[count].answers[i] + "</button>"
         );
-        }
         output.push(
-        '<div class="question">' + questions[i].q + '</div>'
-        + '<div class="answers">' + answers.join('') + '</div>'
+        "<div class='answers'>" + answers.join('') + "</div>"
         );
-        displayQuestion.innerHTML = output.join('');
+        displayAnswers.innerHTML = output.join('');
+        //make a button
+        //assign function to button that increments count on click
+        //that function will check if you're end of questions array as well as check for correct answer
     }
+    
     //     if ((answers === correctAnswer)
     //     ) {
     //         alert("correct")
@@ -131,7 +132,7 @@ function askQuestions(questions, displayQuestion) {
     // final score
     // enter initials: text field and submit button
     // store score in localStorage
-    localStorage.setItem("score", JSON.stringify(score));
+    // localStorage.setItem("score", JSON.stringify(score));
     // localStorage.setItem("initials", JSON.stringify(initials));
 
     // display High scores

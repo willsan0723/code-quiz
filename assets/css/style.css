@@ -19,6 +19,7 @@
   }
   #q-container {
     font-size: 27px;
+    padding-bottom: 10px;
   }
   button {
     color: white;
@@ -27,4 +28,5 @@
     padding: 10px;
     border-radius: 15px;
     border-style:none;
+    margin-bottom: 4px;
   }
