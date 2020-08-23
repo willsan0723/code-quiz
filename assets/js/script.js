@@ -8,6 +8,7 @@ var rightWrong = document.getElementById('answer-boolean');
 var score;
 var sectionEl = document.getElementById('sectionEl');
 var initials = [];
+var timeLeft;
 
 function countdown() {
     var timeLeft = 75;
@@ -111,7 +112,7 @@ function askQuestions() {
         answers = [];
         answers.push
         (
-            "<button onclick='checkAnswer()'>"  + questions[count].answers[i] + "</button>"
+            "<button id='qBtn" + i + "' onclick='checkAnswer()'>"  + questions[count].answers[i] + "</button>"
         );
         output.push(
         "<div>" + answers.join('') + "</div>"
@@ -119,11 +120,10 @@ function askQuestions() {
         //make buttons
         displayAnswers.innerHTML = output.join('');
         
+        
         //assign function to button that increments count on click
         //that function will check if you're end of questions array as well as check for correct answer            
-    }
-    
-    
+    }      
 
     //     if ((answers === correctAnswer)
     //     ) {
@@ -145,12 +145,22 @@ function askQuestions() {
     // display High scores
     // highScore();    
 }
+
 function checkAnswer(){
+    if (document.getElementById('qBtn2').textContent === questions[count].correctAnswer) {
+
+    }
+    else {
+        timeLeft -= 10;
+    }    
     ++count;
     if (count<questions.length){   
     // check answer
+        
     //display right or wrong    
+    
     askQuestions();
+
     }
     else {
     console.log(score);
