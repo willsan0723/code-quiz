@@ -12,6 +12,7 @@ var initials = [];
 var timeLeft = 75;
 var localStorageData;
 var highScores = [];
+var savedScore;
 
 function countdown() {    
     askQuestions(questions, displayQuestion);
@@ -149,7 +150,6 @@ function askQuestions() {
 }
 
 function checkAnswer(){
-    console.log(event.target.id);
     if (event.target.id == questions[count].correctAnswer) {
         rightWrong.textContent = "Correct.";
     }
@@ -176,11 +176,7 @@ function checkAnswer(){
     displayAnswers.textContent = "";
     }
 }
-function sendScore(){
-    var localStorageData = JSON.parse(localStorage.getItem("highScores"));
-    for (var i = 0; i < localStorageData.length; i++) {        
-        scoreIdCounter++;
-    }
+function sendScore(){    
     var scoreInitials = document.getElementById('initialEl').value.trim();    
     var scoreDataObj = {
         initials: scoreInitials,
@@ -189,25 +185,37 @@ function sendScore(){
     scoreDataObj.id = scoreIdCounter;
     highScores.push(scoreDataObj);
     localStorage.setItem("highScores", JSON.stringify(highScores));  
-    scoreIdCounter++;   
-
+    scoreIdCounter++;
+    highScore();
 }
-
-// function highScore() {
-//     //display in quiz section instead
-//     alert("Hello");
-//     var savedScore = localStorage.getItem("score");
-//     if (!savedScore) {
-//         return false;
-//     };
-//     savedScore = JSON.parse(savedScore);
-//     for (var i = 0; i < savedScore.length; i++) {
-//         sectionEl.textContent = savedScore;
-//     }
-//     // button to go back (returning to original page code)
-//     // button to clear high scores (clearing local storage)
-// }
-
+var loadScore = function() {
+    // get highScore from localStorage
+    var savedScore = localStorage.getItem("highScores");
+    if (!savedScore) {
+        return false;
+    };
+    // convert tasks from stringified format back into an array of objects
+    savedScore = JSON.parse(savedScore);
+    // loop through savedScore array
+    for (var i = 0; i < savedScore.length; i++) {
+        // pass each score object back into the saved scores
+        highScores.push(savedScore[i]);
+        scoreIdCounter++;
+    };        
+}
+function highScore() {
+    
+    // var savedScore = localStorage.getItem("highScores");
+    sectionEl.textContent = "High Scores";    
+            // alert(savedScore.id);   
+ 
+    
+    // button to go back (returning to original page code)
+    // location.reload();
+    // button to clear high scores (clearing local storage)
+    // localStorage.clear();
+}
+loadScore();
 startBtn.addEventListener("click", function() {
 countdown();
 }
