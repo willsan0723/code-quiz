@@ -1,3 +1,4 @@
+var scoreIdCounter = 0;
 var timerEl = document.getElementById('timer');
 var mainEl = document.getElementById('main');
 var startBtn = document.getElementById('start');
@@ -10,6 +11,7 @@ var sectionEl = document.getElementById('sectionEl');
 var initials = [];
 var timeLeft = 75;
 var localStorageData;
+var highScores = [];
 
 function countdown() {    
     askQuestions(questions, displayQuestion);
@@ -149,9 +151,10 @@ function askQuestions() {
 function checkAnswer(){
     console.log(event.target.id);
     if (event.target.id == questions[count].correctAnswer) {
-        
+        rightWrong.textContent = "Correct.";
     }
     else {
+        rightWrong.textContent = "Wrong!";
         timeLeft -= 10;
     }    
     ++count;
@@ -174,19 +177,21 @@ function checkAnswer(){
     }
 }
 function sendScore(){
-    var scoreInitials = document.getElementById('initialEl').value.trim();
     var localStorageData = JSON.parse(localStorage.getItem("highScores"));
-    var highScores = [];
+    for (var i = 0; i < localStorageData.length; i++) {        
+        scoreIdCounter++;
+    }
+    var scoreInitials = document.getElementById('initialEl').value.trim();    
     var scoreDataObj = {
         initials: scoreInitials,
         quizScore: score
     }
+    scoreDataObj.id = scoreIdCounter;
     highScores.push(scoreDataObj);
-    localStorage.setItem("highScores", JSON.stringify(scoreDataObj));
-    //send to high score page
-    
+    localStorage.setItem("highScores", JSON.stringify(highScores));  
+    scoreIdCounter++;   
+
 }
-// </p></br><p>Your score is: " + timeLeft +"</p>
 
 // function highScore() {
 //     //display in quiz section instead
@@ -202,9 +207,6 @@ function sendScore(){
 //     // button to go back (returning to original page code)
 //     // button to clear high scores (clearing local storage)
 // }
-function rightWrong() {
-
-}
 
 startBtn.addEventListener("click", function() {
 countdown();
