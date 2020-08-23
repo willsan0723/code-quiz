@@ -8,10 +8,10 @@ var rightWrong = document.getElementById('answer-boolean');
 var score;
 var sectionEl = document.getElementById('sectionEl');
 var initials = [];
-var timeLeft;
+var timeLeft = 75;
+var localStorageData;
 
-function countdown() {
-    var timeLeft = 75;
+function countdown() {    
     askQuestions(questions, displayQuestion);
     timerEl.textContent = ("Time: " + timeLeft);
     // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
@@ -19,7 +19,7 @@ function countdown() {
     timeInterval = setInterval(function () {
         if (timeLeft > 1) {
             timerEl.textContent = ("Time: " + --timeLeft);
-            score =timeLeft;
+            score = timeLeft;
             return score;
         }
         else {
@@ -39,7 +39,7 @@ var questions = [
             '3. Alerts',
             '4. Numbers'
         ],
-        correctAnswer: '3. Alerts'
+        correctAnswer: '2'
     },
     {
         q: "Which is not a looping structure in JavaScript?",
@@ -49,7 +49,7 @@ var questions = [
             '3. do-while',
             '4. If'
         ],
-        correctAnswer: '4. If'
+        correctAnswer: '3'
     },
     {
         q: "Which is not a type of Pop up box available in JavaScript?",
@@ -59,7 +59,7 @@ var questions = [
             '3. Prompt',
             '4. Confirm'
         ],
-        correctAnswer: '2. Display'
+        correctAnswer: '1'
     },
     {
         q: "What is the disadvantage of using innerHTML in JavaScript?",
@@ -69,7 +69,7 @@ var questions = [
             '3. The innerHTML does not provide validation and therefore we can potentially insert valid and broken HTML in the document and break it',
             '4. All of the above'
         ],
-        correctAnswer: '4. All of the above'
+        correctAnswer: '3'
     },
     {
         q: "The condition in an if/else statement is enclosed with ______.",
@@ -79,7 +79,7 @@ var questions = [
             '3. parenthesis',
             '4. square brackets'
         ],
-        correctAnswer: '3. parenthesis'
+        correctAnswer: '2'
     },
     {
         q: "Arrays in JavaScript can be used to store _______.",
@@ -89,7 +89,7 @@ var questions = [
             '3. booleans',
             '4. all of the above'
         ],
-        correctAnswer: '4. all of the above'
+        correctAnswer: '3'
     },
     {
         q: "String values must be enclosed within _____ when being assigned to variables.",
@@ -99,7 +99,7 @@ var questions = [
             '3. quotes',
             '4. parenthesis'
         ],
-        correctAnswer: '3. quotes'
+        correctAnswer: '2'
     }
 ];
 
@@ -112,7 +112,7 @@ function askQuestions() {
         answers = [];
         answers.push
         (
-            "<button id='qBtn" + i + "' onclick='checkAnswer()'>"  + questions[count].answers[i] + "</button>"
+            "<button id=" + i +" onclick='checkAnswer()'>"  + questions[count].answers[i] + "</button>"
         );
         output.push(
         "<div>" + answers.join('') + "</div>"
@@ -147,8 +147,9 @@ function askQuestions() {
 }
 
 function checkAnswer(){
-    if (document.getElementById('qBtn2').textContent === questions[count].correctAnswer) {
-
+    console.log(event.target.id);
+    if (event.target.id == questions[count].correctAnswer) {
+        
     }
     else {
         timeLeft -= 10;
@@ -173,26 +174,34 @@ function checkAnswer(){
     }
 }
 function sendScore(){
-    initials = document.getElementById('initialEl');
-    localStorage.setItem("initals", JSON.stringify(initials.value));
-    localStorage.setItem("score", JSON.stringify(score));
+    var scoreInitials = document.getElementById('initialEl').value.trim();
+    var localStorageData = JSON.parse(localStorage.getItem("highScores"));
+    var highScores = [];
+    var scoreDataObj = {
+        initials: scoreInitials,
+        quizScore: score
+    }
+    highScores.push(scoreDataObj);
+    localStorage.setItem("highScores", JSON.stringify(scoreDataObj));
+    //send to high score page
+    
 }
 // </p></br><p>Your score is: " + timeLeft +"</p>
 
-function highScore() {
-    //display in quiz section instead
-    alert("Hello");
-    var savedScore = localStorage.getItem("score");
-    if (!savedScore) {
-        return false;
-    };
-    savedScore = JSON.parse(savedScore);
-    for (var i = 0; i < savedScore.length; i++) {
-        sectionEl.textContent = savedScore;
-    }
-    // button to go back (returning to original page code)
-    // button to clear high scores (clearing local storage)
-}
+// function highScore() {
+//     //display in quiz section instead
+//     alert("Hello");
+//     var savedScore = localStorage.getItem("score");
+//     if (!savedScore) {
+//         return false;
+//     };
+//     savedScore = JSON.parse(savedScore);
+//     for (var i = 0; i < savedScore.length; i++) {
+//         sectionEl.textContent = savedScore;
+//     }
+//     // button to go back (returning to original page code)
+//     // button to clear high scores (clearing local storage)
+// }
 function rightWrong() {
 
 }
