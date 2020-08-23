@@ -7,6 +7,7 @@ var displayAnswers = document.getElementById('answersList');
 var rightWrong = document.getElementById('answer-boolean');
 var score;
 var sectionEl = document.getElementById('sectionEl');
+var initials = [];
 
 function countdown() {
     var timeLeft = 75;
@@ -153,24 +154,31 @@ function checkAnswer(){
     }
     else {
     console.log(score);
-    localStorage.setItem("score", JSON.stringify(score));
+    
     clearInterval(timeInterval);    
     sectionEl.textContent = "All done!";
-    displayQuestion.innerHTML = "Your final score is: " + score + "</br>Please enter initials: ";
+    displayQuestion.innerHTML = "Your final score is: " + score + 
+    "</br>Please enter initials: <form><input type='text' name='initials' id='initialEl' onSubmit ='return false'/><input type='button' value='Submit' id='btnSubmit' onSubmit ='return false' onclick='sendScore()'></form>";
     displayAnswers.textContent = "";
     }
+}
+function sendScore(){
+    initials = document.getElementById('initialEl');
+    localStorage.setItem("initals", JSON.stringify(initials.value));
+    localStorage.setItem("score", JSON.stringify(score));
 }
 // </p></br><p>Your score is: " + timeLeft +"</p>
 
 function highScore() {
     //display in quiz section instead
+    alert("Hello");
     var savedScore = localStorage.getItem("score");
     if (!savedScore) {
         return false;
     };
     savedScore = JSON.parse(savedScore);
     for (var i = 0; i < savedScore.length; i++) {
-        //display highscore
+        sectionEl.textContent = savedScore;
     }
     // button to go back (returning to original page code)
     // button to clear high scores (clearing local storage)
