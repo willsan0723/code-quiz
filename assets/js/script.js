@@ -1,3 +1,4 @@
+// Global variable declarations
 var scoreIdCounter = 0;
 var timerEl = document.getElementById('timer');
 var mainEl = document.getElementById('main');
@@ -13,11 +14,11 @@ var timeLeft = 75;
 var localStorageData;
 var highScores = [];
 var savedScore;
+var count = 0;
 
-function countdown() {    
+function countdown() {
     askQuestions(questions, displayQuestion);
     timerEl.textContent = ("Time: " + timeLeft);
-    // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
     clearInterval(timeInterval);
     timeInterval = setInterval(function () {
         if (timeLeft > 0) {
@@ -28,11 +29,10 @@ function countdown() {
         else {
             timerEl.textContent = '';
             score = 0;
-            gameOver();            
+            gameOver();
         }
     }, 1000);
 }
-
 
 var questions = [
     {
@@ -107,7 +107,6 @@ var questions = [
     }
 ];
 
-var count = 0;
 function askQuestions() {
     var output = [];
     var answers;
@@ -115,89 +114,65 @@ function askQuestions() {
     for (i = 0; i < questions[count].answers.length; i++) {
         answers = [];
         answers.push
-        (
-            "<button id=" + i +" onclick='checkAnswer()'>"  + questions[count].answers[i] + "</button>"
-        );
+            (
+                //assign function to button that increments count on click
+                "<button id=" + i + " onclick='checkAnswer()'>" + questions[count].answers[i] + "</button>"
+            );
         output.push(
-        "<div>" + answers.join('') + "</div>"
+            "<div>" + answers.join('') + "</div>"
         );
-        //make buttons
         displayAnswers.innerHTML = output.join('');
-        
-        
-        //assign function to button that increments count on click
-        //that function will check if you're end of questions array as well as check for correct answer            
-    }      
-
-    //     if ((answers === correctAnswer)
-    //     ) {
-    //         alert("correct")
-    //         score++;
-    //     }
-    //     else{
-    //         timeLeft -= 10;
-    //     } 
-    // }
-    
-    // display All done!
-    // final score
-    // enter initials: text field and submit button
-    // store score in localStorage
-    // localStorage.setItem("score", JSON.stringify(score));
-    // localStorage.setItem("initials", JSON.stringify(initials));
-
-    // display High scores
-    // highScore();    
+    }
 }
 
-function checkAnswer(){
+function checkAnswer() {
     if (event.target.id == questions[count].correctAnswer) {
         rightWrong.textContent = "Correct.";
         rightWrong.style.borderTop = "2px solid gray";
-        rightWrong.style.marginTop = "8px";         
+        rightWrong.style.marginTop = "8px";
     }
     else {
         rightWrong.textContent = "Wrong!";
         rightWrong.style.borderTop = "2px solid gray";
         rightWrong.style.marginTop = "8px";
         timeLeft -= 10;
-    }    
+    }
     ++count;
-    if (count<questions.length){   
-    // check answer
-        
-    //display right or wrong    
-    
-    askQuestions();
+    if (count < questions.length) {
+        // check answer
+
+        //display right or wrong    
+
+        askQuestions();
 
     }
     else {
-    gameOver();
+        gameOver();
     }
 }
 
-function gameOver(){
-    clearInterval(timeInterval);   
+function gameOver() {
+    clearInterval(timeInterval);
     sectionEl.textContent = "All done!";
-    displayQuestion.innerHTML = "Your final score is: " + score + 
-    "</br>Please enter initials: <form><input type='text' name='initials' id='initialEl' onSubmit ='return false'/><input type='button' value='Submit' id='btnSubmit' onSubmit ='return false' onclick='sendScore()'></form>";
+    displayQuestion.innerHTML = "Your final score is: " + score +
+        "</br>Please enter initials: <form><input type='text' name='initials' id='initialEl' onSubmit ='return false'/><input type='button' value='Submit' id='btnSubmit' onSubmit ='return false' onclick='sendScore()'></form>";
     displayAnswers.textContent = "";
     rightWrong.innerHTML = "";
 }
 
-function sendScore(){    
-    var scoreInitials = document.getElementById('initialEl').value.trim();    
+function sendScore() {
+    var scoreInitials = document.getElementById('initialEl').value.trim();
     var scoreDataObj = {
         initials: scoreInitials,
         quizScore: score
     }
     scoreDataObj.id = scoreIdCounter;
     highScores.push(scoreDataObj);
-    localStorage.setItem("highScores", JSON.stringify(highScores));  
-    scoreIdCounter++;    
+    localStorage.setItem("highScores", JSON.stringify(highScores));
+    scoreIdCounter++;
     highScore(scoreDataObj);
 }
-var loadScore = function() {
+var loadScore = function () {
     // get highScore from localStorage
     var savedScore = localStorage.getItem("highScores");
     if (!savedScore) {
@@ -211,27 +186,21 @@ var loadScore = function() {
         highScores.push(savedScore[i]);
         scoreIdCounter++;
     }
-    // highScore(highScores);
 }
 
 function highScore() {
-    sectionEl.textContent = "High Scores";    
+    sectionEl.textContent = "High Scores";
     displayQuestion.className = "score-item";
     displayQuestion.innerHTML = "<ul>";
     for (var i = 0; i < highScores.length; i++) {
-    displayQuestion.innerHTML += "<ol>" + (i+1) +". " + highScores[i].initials + " - " + highScores[i].quizScore + "</ol>";
+        displayQuestion.innerHTML += "<ol>" + (i + 1) + ". " + highScores[i].initials + " - " + highScores[i].quizScore + "</ol>";
     }
-    displayQuestion.innerHTML += "</ul>";    
+    displayQuestion.innerHTML += "</ul>";
     // button to go back (returning to original page code)
     displayQuestion.innerHTML += "<button onclick='location.reload()'>Go Back</button>";
     // button to clear high scores (clearing local storage)
     displayQuestion.innerHTML += "<button onclick='localStorage.clear()'>Clear High Scores</button>";
 }
 
-
-
 loadScore();
-startBtn.addEventListener("click", function() {
-countdown();
-}
-);
+startBtn.addEventListener("click", function () {countdown();});

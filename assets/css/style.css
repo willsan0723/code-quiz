@@ -39,7 +39,10 @@
   }
   ol {
     background-color: lightgray;
+    max-width: 500px;
+    margin: auto;
+    border: 2px solid white;
   }
   .score-item button {
-    margin: auto;
+    margin: 5px 5px 0 0;
   }
