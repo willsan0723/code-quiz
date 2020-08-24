@@ -13,3 +13,8 @@ When the game is over, time remaining will equate score and initials will be ask
 ```
 ### Screenshots
 
+![](Screenshot_1.jpg)
+![](Screenshot_2.jpg)
+![](Screenshot_3.jpg)
+![](Screenshot_4.jpg)
+![](Screenshot_5.jpg)
