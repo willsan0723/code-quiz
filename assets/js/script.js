@@ -20,13 +20,14 @@ function countdown() {
     // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
     clearInterval(timeInterval);
     timeInterval = setInterval(function () {
-        if (timeLeft > 1) {
+        if (timeLeft > 0) {
             timerEl.textContent = ("Time: " + --timeLeft);
             score = timeLeft;
             return score;
         }
         else {
             timerEl.textContent = '';
+            score = 0;
             gameOver();            
         }
     }, 1000);
@@ -157,6 +158,8 @@ function checkAnswer(){
     }
     else {
         rightWrong.textContent = "Wrong!";
+        rightWrong.style.borderTop = "2px solid gray";
+        rightWrong.style.marginTop = "8px";
         timeLeft -= 10;
     }    
     ++count;
