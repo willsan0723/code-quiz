@@ -27,7 +27,7 @@ function countdown() {
         }
         else {
             timerEl.textContent = '';
-            clearInterval(timeInterval);            
+            gameOver();            
         }
     }, 1000);
 }
@@ -152,6 +152,8 @@ function askQuestions() {
 function checkAnswer(){
     if (event.target.id == questions[count].correctAnswer) {
         rightWrong.textContent = "Correct.";
+        rightWrong.style.borderTop = "2px solid gray";
+        rightWrong.style.marginTop = "8px";         
     }
     else {
         rightWrong.textContent = "Wrong!";
@@ -167,15 +169,19 @@ function checkAnswer(){
 
     }
     else {
-    console.log(score);
-    
-    clearInterval(timeInterval);    
+    gameOver();
+    }
+}
+
+function gameOver(){
+    clearInterval(timeInterval);   
     sectionEl.textContent = "All done!";
     displayQuestion.innerHTML = "Your final score is: " + score + 
     "</br>Please enter initials: <form><input type='text' name='initials' id='initialEl' onSubmit ='return false'/><input type='button' value='Submit' id='btnSubmit' onSubmit ='return false' onclick='sendScore()'></form>";
     displayAnswers.textContent = "";
-    }
+    rightWrong.innerHTML = "";
 }
+
 function sendScore(){    
     var scoreInitials = document.getElementById('initialEl').value.trim();    
     var scoreDataObj = {
@@ -185,36 +191,42 @@ function sendScore(){
     scoreDataObj.id = scoreIdCounter;
     highScores.push(scoreDataObj);
     localStorage.setItem("highScores", JSON.stringify(highScores));  
-    scoreIdCounter++;
-    highScore();
+    scoreIdCounter++;    
+    highScore(scoreDataObj);
 }
 var loadScore = function() {
     // get highScore from localStorage
     var savedScore = localStorage.getItem("highScores");
     if (!savedScore) {
         return false;
-    };
+    }
     // convert tasks from stringified format back into an array of objects
     savedScore = JSON.parse(savedScore);
-    // loop through savedScore array
+    // loop through savedScore array    
     for (var i = 0; i < savedScore.length; i++) {
         // pass each score object back into the saved scores
         highScores.push(savedScore[i]);
         scoreIdCounter++;
-    };        
+    }
+    // highScore(highScores);
 }
+
 function highScore() {
-    
-    // var savedScore = localStorage.getItem("highScores");
     sectionEl.textContent = "High Scores";    
-            // alert(savedScore.id);   
- 
-    
+    displayQuestion.className = "score-item";
+    displayQuestion.innerHTML = "<ul>";
+    for (var i = 0; i < highScores.length; i++) {
+    displayQuestion.innerHTML += "<ol>" + (i+1) +". " + highScores[i].initials + " - " + highScores[i].quizScore + "</ol>";
+    }
+    displayQuestion.innerHTML += "</ul>";    
     // button to go back (returning to original page code)
-    // location.reload();
+    displayQuestion.innerHTML += "<button onclick='location.reload()'>Go Back</button>";
     // button to clear high scores (clearing local storage)
-    // localStorage.clear();
+    displayQuestion.innerHTML += "<button onclick='localStorage.clear()'>Clear High Scores</button>";
 }
+
+
+
 loadScore();
 startBtn.addEventListener("click", function() {
 countdown();

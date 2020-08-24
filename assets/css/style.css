@@ -30,8 +30,16 @@
     border-style:none;
     margin-bottom: 4px;
   }
-  #answer-boolean {     
+  #answer-boolean { 
     font-size: 38px;
     padding-top: 10px;
     color: gray;
+    max-width: 500px;
+    margin: auto;
+  }
+  ol {
+    background-color: lightgray;
+  }
+  .score-item button {
+    margin: auto;
   }
