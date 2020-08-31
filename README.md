@@ -5,7 +5,7 @@ Code quizzes are important to test your knowledge of materials. Seeing how they 
 ## Specifications
 
 ```
-*Start button starts timer and presents first question
+Start button starts timer and presents first question
 After question is answered, next question will populate
 If a question is answered incorrectly, time is deducted from the clock
 After all questions are answered or the timer reaches 0 the game will end
