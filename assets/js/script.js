@@ -199,7 +199,11 @@ function highScore() {
     // button to go back (returning to original page code)
     displayQuestion.innerHTML += "<button onclick='location.reload()'>Go Back</button>";
     // button to clear high scores (clearing local storage)
-    displayQuestion.innerHTML += "<button onclick='localStorage.clear()'>Clear High Scores</button>";
+    displayQuestion.innerHTML += "<button onclick='clearScores()'>Clear High Scores</button>";
+}
+function clearScores() {
+    localStorage.clear();
+    location.reload();  // Refresh the page to update the display
 }
 
 loadScore();
